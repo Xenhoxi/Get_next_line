@@ -6,7 +6,7 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 23:44:34 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/12/01 01:31:09 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:32:23 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ char	*all_before_backslash_n(char *str)
 	u = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	result = malloc(sizeof(char) * (i + 1));
+	i++;
+	result = malloc(sizeof(char) * (i));
 	if (!result)
 		return (NULL);
 	u = 0;
@@ -61,7 +62,7 @@ char	*all_before_backslash_n(char *str)
 		result[u] = str[u];
 		u++;
 	}
-	result[u] = str[u];
+	free(str);
 	return (result);
 }
 
@@ -101,7 +102,7 @@ char	*ft_strjoin(char *str, char *buffer, int len)
 
 	i = 0;
 	u = 0;
-	save = malloc(sizeof(char) * (len + ft_strlen(str) + 1));
+	save = malloc(sizeof(char) * (len));
 	if (str != NULL)
 	{
 		while (str[i] != '\n' && str[i] != '\0')
@@ -118,7 +119,6 @@ char	*ft_strjoin(char *str, char *buffer, int len)
 		u++;
 		i++;
 	}
-	save[u] = 0;
 	free(str);
 	return (save);
 }
@@ -160,19 +160,19 @@ int	main(void)
 	printf("%s", result);
 	result = get_next_line(fd);
 	printf("%s", result);
-	result = get_next_line(fd);
-	printf("%s", result);
-	result = get_next_line(fd);
-	printf("%s", result);
-	result = get_next_line(fd);
-	printf("%s", result);
-	result = get_next_line(fd);
-	printf("%s", result);
-	result = get_next_line(fd);
-	printf("%s", result);
-	result = get_next_line(fd);
-	printf("%s", result);
-	result = get_next_line(fd);
-	printf("%s", result);
+	// result = get_next_line(fd);
+	// printf("%s", result);
+	// result = get_next_line(fd);
+	// printf("%s", result);
+	// result = get_next_line(fd);
+	// printf("%s", result);
+	// result = get_next_line(fd);
+	// printf("%s", result);
+	// result = get_next_line(fd);
+	// printf("%s", result);
+	// result = get_next_line(fd);
+	// printf("%s", result);
+	// result = get_next_line(fd);
+	// printf("%s", result);
 	return (0);
 }
