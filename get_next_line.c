@@ -6,7 +6,7 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 23:44:34 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/12/01 16:32:23 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:11:37 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,16 @@ char	*all_before_backslash_n(char *str)
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	i++;
-	result = malloc(sizeof(char) * (i));
+	result = malloc(sizeof(char) * (i + 1));
 	if (!result)
 		return (NULL);
 	u = 0;
-	while (u <= i)
+	while (u < i)
 	{
 		result[u] = str[u];
 		u++;
 	}
+	result[u] = 0;
 	free(str);
 	return (result);
 }
@@ -78,7 +79,7 @@ char	*all_after_backslash_n(char *str)
 	result = NULL;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	len_str = ft_strlen(str) -1 - i;
+	len_str = ft_strlen(str) - i;
 	u = 0;
 	i++;
 	if (len_str != 0)
@@ -91,6 +92,7 @@ char	*all_after_backslash_n(char *str)
 		u++;
 		i++;
 	}
+	result[u] = 0;
 	return (result);
 }
 
@@ -102,7 +104,7 @@ char	*ft_strjoin(char *str, char *buffer, int len)
 
 	i = 0;
 	u = 0;
-	save = malloc(sizeof(char) * (len));
+	save = malloc(sizeof(char) * (len + 1));
 	if (str != NULL)
 	{
 		while (str[i] != '\n' && str[i] != '\0')
@@ -119,6 +121,7 @@ char	*ft_strjoin(char *str, char *buffer, int len)
 		u++;
 		i++;
 	}
+	save[u] = 0;
 	free(str);
 	return (save);
 }
@@ -132,7 +135,7 @@ char	*get_next_line(int fd)
 	char		*result;
 	int			u;
 
-	i = 0;
+	i = ft_strlen(save);
 	end = 0;
 	u = 1;
 	if (check_backslash(save))
@@ -150,29 +153,29 @@ char	*get_next_line(int fd)
 	return (result);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*result;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*result;
 
-	fd = open("read.txt", O_RDONLY);
-	result = get_next_line(fd);
-	printf("%s", result);
-	result = get_next_line(fd);
-	printf("%s", result);
-	// result = get_next_line(fd);
-	// printf("%s", result);
-	// result = get_next_line(fd);
-	// printf("%s", result);
-	// result = get_next_line(fd);
-	// printf("%s", result);
-	// result = get_next_line(fd);
-	// printf("%s", result);
-	// result = get_next_line(fd);
-	// printf("%s", result);
-	// result = get_next_line(fd);
-	// printf("%s", result);
-	// result = get_next_line(fd);
-	// printf("%s", result);
-	return (0);
-}
+// 	fd = open("read.txt", O_RDONLY);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	result = get_next_line(fd);
+// 	printf("%s", result);
+// 	return (0);
+// }
