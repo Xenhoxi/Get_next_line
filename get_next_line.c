@@ -6,53 +6,11 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 23:44:34 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/12/06 19:25:33 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/06 20:05:56 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-
-char	*freeall(char *str)
-{
-	if (str)
-	{
-		free(str);
-		str = 0;
-		return (NULL);
-	}
-	return (NULL);
-}
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
-
-int	check_backslash(char *save)
-{
-	int	i;
-
-	i = 0;
-	if (!save)
-		return (0);
-	while (save[i])
-	{
-		if (save[i] == '\0' || save[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 char	*all_before_backslash_n(char *str)
 {
@@ -102,11 +60,7 @@ char	*all_after_backslash_n(char *str)
 	if (!result)
 		return (freeall(result));
 	while (u < len_str)
-	{
-		result[u] = str[i];
-		u++;
-		i++;
-	}
+		result[u++] = str[i++];
 	result[u] = 0;
 	freeall(str);
 	return (result);
@@ -126,11 +80,7 @@ char	*ft_strjoin(char *str, char *buffer, int len)
 	if (str != NULL)
 	{
 		while (str[i] != '\n' && str[i] != '\0')
-		{
-			save[u] = str[i];
-			i++;
-			u++;
-		}
+			save[u++] = str[i++];
 	}
 	i = 0;
 	while (u < len)

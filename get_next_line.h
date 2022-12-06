@@ -6,7 +6,7 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 23:46:07 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/11/27 02:16:10 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/06 19:40:09 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 # define GET_NEXT_LINE_H
 
 # include <unistd.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
 char	*get_next_line(int fd);
+char	*freeall(char *str);
+char	*freeallspe(char *str);
+int		ft_strlen(char *str);
+int		check_backslash(char *save);
 
 #endif
