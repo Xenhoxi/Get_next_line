@@ -6,7 +6,7 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 23:44:34 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/12/06 20:05:56 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:00:25 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,19 @@ char	*ft_strjoin(char *str, char *buffer, int len)
 
 	i = 0;
 	u = 0;
+	if (!buffer || !str)
+		return (NULL);
 	save = malloc(sizeof(char) * (len + 1));
 	if (!save)
 		return (freeall(save));
 	if (str != NULL)
-	{
 		while (str[i] != '\n' && str[i] != '\0')
 			save[u++] = str[i++];
-	}
+	free(str);
 	i = 0;
 	while (u < len)
-	{
-		save[u] = buffer[i];
-		u++;
-		i++;
-	}
+		save[u++] = buffer[i++];
 	save[u] = 0;
-	free(str);
 	return (save);
 }
 
@@ -98,12 +94,10 @@ char	*get_next_line(int fd)
 {
 	char		buffer[BUFFER_SIZE];
 	static char	*save;
-	int			end;
 	char		*result;
 	int			u;
 
-	end = 0;
-	u = 1;
+	u = BUFFER_SIZE;
 	result = 0;
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buffer, 0) < 0)
 	{
@@ -111,35 +105,19 @@ char	*get_next_line(int fd)
 		save = 0;
 		return (save);
 	}
-	if (check_backslash(save))
-			end = 1;
-	while (!end && u > 0)
+	if (check_backslash(save, u))
+		u = 0;
+	while (u > 0)
 	{
 		u = read(fd, buffer, BUFFER_SIZE);
-		if (u == -1)
-			freeall(save);
-		save = ft_strjoin(save, buffer, (u + ft_strlen(save)));
-		if (check_backslash(save))
-			end = 1;
+		if ((save != NULL && u > 0) || (save == NULL && u > 0))
+			save = ft_strjoin(save, buffer, (u + ft_strlen(save)));
+		if (!save)
+			return (NULL);
+		if (check_backslash(save, u))
+			break ;
 	}
 	result = all_before_backslash_n(save);
 	save = all_after_backslash_n(save);
 	return (result);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*result;
-// 	int		i;
-
-// 	i = 0;
-// 	fd = open("read.txt", O_RDONLY);
-// 	while (i < 2)
-// 	{
-// 		result = get_next_line(fd);
-// 		printf("%s", result);
-// 		i++;
-// 	}
-// 	return (0);
-// }
