@@ -6,7 +6,7 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 23:44:34 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/12/09 18:18:25 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:46:49 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,9 @@ char	*all_before_backslash_n(char *str)
 	result = malloc(sizeof(char) * (i + 1));
 	if (!result)
 		return (freeall(str));
-	u = 0;
-	while (u < i)
-	{
+	u = -1;
+	while (++u < i)
 		result[u] = str[u];
-		u++;
-	}
 	result[u] = 0;
 	if (result[0] == '\0')
 	{
@@ -65,7 +62,6 @@ char	*all_after_backslash_n(char *str)
 		free(str);
 		return (freeall(result));
 	}
-
 	while (u < len_str)
 		result[u++] = str[i++];
 	result[u] = 0;
@@ -123,7 +119,7 @@ char	*get_next_line(int fd)
 			break ;
 	}
 	result = all_before_backslash_n(save);
-	if(result == 0)
+	if (result == 0)
 	{
 		save = 0;
 		return (0);
