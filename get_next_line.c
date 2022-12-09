@@ -6,7 +6,7 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 23:44:34 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/12/09 18:00:25 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:18:25 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*all_before_backslash_n(char *str)
 		i++;
 	result = malloc(sizeof(char) * (i + 1));
 	if (!result)
-		return (freeall(result));
+		return (freeall(str));
 	u = 0;
 	while (u < i)
 	{
@@ -35,7 +35,10 @@ char	*all_before_backslash_n(char *str)
 	}
 	result[u] = 0;
 	if (result[0] == '\0')
+	{
+		free(str);
 		return (freeall(result));
+	}
 	return (result);
 }
 
@@ -58,7 +61,11 @@ char	*all_after_backslash_n(char *str)
 	u = 0;
 	result = malloc(sizeof(char) * len_str + 1);
 	if (!result)
+	{
+		free(str);
 		return (freeall(result));
+	}
+
 	while (u < len_str)
 		result[u++] = str[i++];
 	result[u] = 0;
@@ -74,11 +81,9 @@ char	*ft_strjoin(char *str, char *buffer, int len)
 
 	i = 0;
 	u = 0;
-	if (!buffer || !str)
-		return (NULL);
 	save = malloc(sizeof(char) * (len + 1));
 	if (!save)
-		return (freeall(save));
+		return (freeall(str));
 	if (str != NULL)
 		while (str[i] != '\n' && str[i] != '\0')
 			save[u++] = str[i++];
@@ -118,6 +123,11 @@ char	*get_next_line(int fd)
 			break ;
 	}
 	result = all_before_backslash_n(save);
+	if(result == 0)
+	{
+		save = 0;
+		return (0);
+	}
 	save = all_after_backslash_n(save);
 	return (result);
 }
