@@ -6,7 +6,7 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 23:44:34 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/12/09 18:46:49 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/09 23:35:57 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*all_before_backslash_n(char *str)
 		i++;
 	result = malloc(sizeof(char) * (i + 1));
 	if (!result)
-		return (freeall(str));
+		return (freeall(&str));
 	u = -1;
 	while (++u < i)
 		result[u] = str[u];
@@ -34,7 +34,7 @@ char	*all_before_backslash_n(char *str)
 	if (result[0] == '\0')
 	{
 		free(str);
-		return (freeall(result));
+		return (freeall(&result));
 	}
 	return (result);
 }
@@ -52,20 +52,17 @@ char	*all_after_backslash_n(char *str)
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
 	if (!str[i])
-		return (freeall(str));
+		return (freeall(&str));
 	i++;
 	len_str = ft_strlen(str) - i;
 	u = 0;
 	result = malloc(sizeof(char) * len_str + 1);
 	if (!result)
-	{
-		free(str);
-		return (freeall(result));
-	}
+		return (doublefree(str, &result));
 	while (u < len_str)
 		result[u++] = str[i++];
 	result[u] = 0;
-	freeall(str);
+	freeall(&str);
 	return (result);
 }
 
@@ -79,7 +76,7 @@ char	*ft_strjoin(char *str, char *buffer, int len)
 	u = 0;
 	save = malloc(sizeof(char) * (len + 1));
 	if (!save)
-		return (freeall(str));
+		return (freeall(&str));
 	if (str != NULL)
 		while (str[i] != '\n' && str[i] != '\0')
 			save[u++] = str[i++];
@@ -99,13 +96,8 @@ char	*get_next_line(int fd)
 	int			u;
 
 	u = BUFFER_SIZE;
-	result = 0;
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buffer, 0) < 0)
-	{
-		free(save);
-		save = 0;
-		return (save);
-	}
+		return (freeall(&save));
 	if (check_backslash(save, u))
 		u = 0;
 	while (u > 0)
@@ -120,10 +112,7 @@ char	*get_next_line(int fd)
 	}
 	result = all_before_backslash_n(save);
 	if (result == 0)
-	{
-		save = 0;
-		return (0);
-	}
+		return (freeallspe(&save));
 	save = all_after_backslash_n(save);
 	return (result);
 }

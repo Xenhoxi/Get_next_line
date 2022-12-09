@@ -6,28 +6,33 @@
 /*   By: ljerinec <ljerinec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 19:28:48 by ljerinec          #+#    #+#             */
-/*   Updated: 2022/12/09 17:15:55 by ljerinec         ###   ########.fr       */
+/*   Updated: 2022/12/09 23:39:05 by ljerinec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*freeallspe(char *str)
+char	*freeallspe(char **str)
 {
-	free(str);
-	str = 0;
-	return (str);
+	*str = 0;
+	return (0);
 }
 
-char	*freeall(char *str)
+char	*freeall(char **str)
 {
-	if (str)
+	if (*str)
 	{
-		free(str);
-		str = 0;
-		return (NULL);
+		free(*str);
+		*str = 0;
+		return (*str);
 	}
 	return (NULL);
+}
+
+char	*doublefree(char *str, char **result)
+{
+	free(str);
+	return (freeall(result));
 }
 
 int	ft_strlen(char *str)
